@@ -1,0 +1,13 @@
+# rscmgr rc file
+on property:sys.readahead.resource=1
+    readahead /system/system_ext/framework/androidx.window.extensions.jar --fully
+    readahead /system/bin/cameraserver --fully
+    readahead /system/lib64/libedmnativehelper.so --fully
+    readahead /vendor/lib64/libvpl.so --fully
+    readahead /vendor/lib64/libeden_nn.so --fully
+    readahead /vendor/lib64/vendor.samsung.hardware.camera.device@5.0-impl.so --fully
+    readahead /vendor/lib64/unihal_main@2.15.so --fully
+    readahead /vendor/lib64/camera.device@3.2-impl.so --fully
+    readahead /vendor/lib64/libexynoscamera3.so --fully
+    readahead /system/lib64/android.hardware.graphics.composer@2.1.so --fully
+    setprop sys.readahead.resource 0

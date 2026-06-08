@@ -85,17 +85,17 @@ fi
 LOG_STEP_OUT
 
 # Samsung Camera "hal3_mass-phone-release" app flavor
-if ! $SOURCE_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
-    if $TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
-        ADD_TO_WORK_DIR "r9qxxx" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk" 0 0 644 "u:object_r:system_file:s0"
-        ADD_TO_WORK_DIR "r9qxxx" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk.prof" 0 0 644 "u:object_r:system_file:s0"
-    fi
-else
-    if ! $TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
-        # TODO handle this condition
-        LOG_MISSING_PATCHES "SOURCE_CAMERA_SUPPORT_MASS_APP_FLAVOR" "TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR"
-    fi
-fi
+# if ! $SOURCE_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
+#     if $TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
+#         ADD_TO_WORK_DIR "r9qxxx" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk" 0 0 644 "u:object_r:system_file:s0"
+#         ADD_TO_WORK_DIR "r9qxxx" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk.prof" 0 0 644 "u:object_r:system_file:s0"
+#     fi
+# else
+#     if ! $TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
+#         # TODO handle this condition
+#         LOG_MISSING_PATCHES "SOURCE_CAMERA_SUPPORT_MASS_APP_FLAVOR" "TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR"
+#     fi
+# fi
 
 # Add/delete Snapchat CameraKit Plugin if SHOOTING_MODE_FUN is (not) available
 if [ -f "$WORK_DIR/system/system/app/FunModeSDK/FunModeSDK.apk" ]; then

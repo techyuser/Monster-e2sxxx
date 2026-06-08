@@ -2,6 +2,20 @@ if [ ! "$(GET_PROP "system" "ro.unica.version")" ]; then
     SET_PROP "system" "ro.unica.version" "$ROM_VERSION"
 fi
 
+LOG_STEP_IN "- Enabling BSOH in SecSettings"
+
+DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
+
+FTP="
+system/priv-app/SecSettings/SecSettings.apk/smali_classes5/com/samsung/android/settings/deviceinfo/batteryinfo/BatteryRegulatoryPreferenceController.smali
+system/priv-app/SecSettings/SecSettings.apk/smali_classes5/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryInfoFragment.smali
+"
+for f in $FTP; do
+    sed -i "s/SM-A236B/SM-S942B/g" "$APKTOOL_DIR/$f"
+done
+LOG_STEP_OUT
+
+
 SMALI_PATCH "system" "system/framework/framework.jar" \
     "smali/android/app/Instrumentation.smali" "replace" \
     'newApplication(Ljava/lang/Class;Landroid/content/Context;)Landroid/app/Application;' \

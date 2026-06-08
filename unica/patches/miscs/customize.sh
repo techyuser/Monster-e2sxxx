@@ -1,5 +1,9 @@
 SET_PROP_IF_DIFF "vendor" "ro.oem_unlock_supported" "0"
 
+SET_PROP "system" "ro.build.display.id" "khoailang2500-$ROM_VERSION ($VALUE)"
+SET_PROP "product" "ro.build.display.id" "khoailang2500-$ROM_VERSION ($VALUE)"
+
+
 # Better device/model detection in CoreRune
 SMALI_PATCH "system" "system/framework/framework.jar" \
     "smali_classes6/com/samsung/android/rune/CoreRune.smali" "replace" \
