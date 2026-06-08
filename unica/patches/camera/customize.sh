@@ -1,3 +1,9 @@
+source "$SRC_DIR/scripts/utils/common_utils.sh"
+source "$SRC_DIR/scripts/utils/module_utils.sh"
+source "$SRC_DIR/scripts/utils/smali_utils.sh"
+
+MODPATH="$SRC_DIR/unica/patches/camera"
+
 # [
 _LOG() { if $DEBUG; then LOGW "$1"; else ABORT "$1"; fi }
 
@@ -35,7 +41,8 @@ LIBSTAGEFRIGHT_FREAD254="21008052c21f8052e30315aae41f8052f6c30191588c0594"
 if xxd -p -c 0 "$LIBSTAGEFRIGHT" 2> /dev/null | grep -q "$LIBSTAGEFRIGHT_FREAD254"; then
     LOG "- libstagefright AVC encoder cmdline fread254 fix is already patched"
 else
-    HEX_PATCH "$LIBSTAGEFRIGHT" "$LIBSTAGEFRIGHT_FREAD512" "$LIBSTAGEFRIGHT_FREAD254"
+    # HEX_PATCH "$LIBSTAGEFRIGHT" "$LIBSTAGEFRIGHT_FREAD512" "$LIBSTAGEFRIGHT_FREAD254"
+    LOG "... Missing HEX_PATCH for LIBSTAGEFRIGHT: $LIBSTAGEFRIGHT"
 fi
 
 DELETE_FROM_WORK_DIR "system" "system/cameradata/portrait_data"

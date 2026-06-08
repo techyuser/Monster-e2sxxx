@@ -19,7 +19,7 @@ fi
 PRIVATE_KEY_PATH+=".pk8"
 PUBLIC_KEY_PATH+=".x509.pem"
 
-trap 'rm -rf "$TMP_DIR"' EXIT INT
+# trap 'rm -rf "$TMP_DIR"' EXIT INT
 
 # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#4042
 GENERATE_OP_LIST()
@@ -250,13 +250,13 @@ for p in $PARTITIONS_LIST; do
 
     LOG "- Converting $p.img to $p.new.dat"
     EVAL "img2sdat -o \"$TMP_DIR\" --tgt-block-map \"$TMP_DIR/$p.map\" \"$TMP_DIR/$p.img\"" || exit 1
-    rm -f "$TMP_DIR/$p.img" "$TMP_DIR/$p.map"
+    # rm -f "$TMP_DIR/$p.img" "$TMP_DIR/$p.map"
 
     if ! $DEBUG; then
         LOG "- Compressing $p.new.dat"
         # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#3585
         EVAL "brotli --quality=6 --output=\"$TMP_DIR/$p.new.dat.br\" \"$TMP_DIR/$p.new.dat\"" || exit 1
-        rm -f "$TMP_DIR/$p.new.dat"
+        # rm -f "$TMP_DIR/$p.new.dat"
     fi
 done
 
@@ -283,7 +283,7 @@ if [ -f "$SRC_DIR/target/$TARGET_CODENAME/installer/customize.sh" ]; then
 fi
 
 LOG "- Creating zip"
-EVAL "rm -f \"$TMP_DIR/rom.zip\"" || exit 1
+# EVAL "rm -f \"$TMP_DIR/rom.zip\"" || exit 1
 # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#3601
 # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#3609
 # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/ota_utils.py#184
@@ -291,12 +291,12 @@ EVAL "rm -f \"$TMP_DIR/rom.zip\"" || exit 1
 EVAL "cd \"$TMP_DIR\" && 7z a -tzip -mx=0 -mmt=$(nproc) $TMP_DIR/rom.zip -r *.patch.dat -ir!META-INF/com/android/* -i!*.new.dat.br" || exit 1
 EVAL "cd \"$TMP_DIR\" && 7z a -tzip -mx=3 -mmt=$(nproc) $TMP_DIR/rom.zip -r * -xr!META-INF/com/android/* -x!*.new.dat.br -x!*.patch.dat -x!rom.zip" || exit 1
 
-if ! $DEBUG || $ROM_IS_OFFICIAL; then
-    LOG "- Signing zip"
-    EVAL "signapk -w \"$PUBLIC_KEY_PATH\" \"$PRIVATE_KEY_PATH\" \"$TMP_DIR/rom.zip\" \"$OUTPUT_FILE\"" || exit 1
-    rm -f "$TMP_DIR/rom.zip"
-else
-    mv -f "$TMP_DIR/rom.zip" "$OUTPUT_FILE"
-fi
+# if ! $DEBUG || $ROM_IS_OFFICIAL; then
+#     LOG "- Signing zip"
+#     EVAL "signapk -w \"$PUBLIC_KEY_PATH\" \"$PRIVATE_KEY_PATH\" \"$TMP_DIR/rom.zip\" \"$OUTPUT_FILE\"" || exit 1
+#     rm -f "$TMP_DIR/rom.zip"
+# else
+#     mv -f "$TMP_DIR/rom.zip" "$OUTPUT_FILE"
+# fi
 
 exit 0
