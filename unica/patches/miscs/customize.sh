@@ -1,5 +1,6 @@
 SET_PROP_IF_DIFF "vendor" "ro.oem_unlock_supported" "0"
 
+VALUE="$(GET_PROP "$WORK_DIR/product/etc/build.prop" "ro.build.display.id")"
 SET_PROP "system" "ro.build.display.id" "khoailang2500-$ROM_VERSION ($VALUE)"
 SET_PROP "product" "ro.build.display.id" "khoailang2500-$ROM_VERSION ($VALUE)"
 

@@ -14,6 +14,9 @@ VENDOR_DEBLOAT+="
 etc/dpolicy
 "
 
+# Samsung GameDriver
+SYSTEM_DEBLOAT+="$(find "$WORK_DIR/system" -type d -name "*Driver-*" | sed "s|$WORK_DIR/system/||g")"
+
 # Samsung PROCA certificate DB
 SYSTEM_DEBLOAT+="
 system/etc/proca.db
@@ -168,6 +171,13 @@ system/priv-app/FBServices
 SYSTEM_DEBLOAT+="
 system/etc/permissions/privapp-permissions-com.microsoft.skydrive.xml
 system/priv-app/OneDrive_Samsung_v3
+"
+
+# My Galaxy
+SYSTEM_DEBLOAT+="
+system/etc/permissions/privapp-permissions-com.mygalaxy.service.xml
+system/etc/sysconfig/preinstalled-packages-com.mygalaxy.service.xml
+system/priv-app/MyGalaxyService
 "
 
 # Samsung Analytics

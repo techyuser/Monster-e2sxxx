@@ -1,0 +1,10 @@
+# Audio tweaks ?
+vendor.audio.offload.buffer.size.kb=256
+
+# Dalvik - nhglong - platform: sm7325: Enable usage of dex2oat64
+# https://github.com/salvogiangri/UN1CA/commit/000a103ebce7d44b162142a016ed0a55e28a6352
+dalvik.vm.dex2oat64.enabled=true
+
+# Disable HeatMapThread logspam
+# https://github.com/salvogiangri/UN1CA/commit/0cd061d6f9a47fd91abd1fa9ed18808e6800ed06
+persist.log.tag.HeatmapThread=S

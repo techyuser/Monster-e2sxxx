@@ -400,6 +400,37 @@ if [ ! "$(find "$WORK_DIR/product/overlay" -maxdepth 1 -type f -name "SystemUI*"
     fi
 fi
 
+# Patch libvpl unload path for One UI 8.5 camera stability
+PATCH_LIBVPL_UNLOAD()
+{
+    local FILE="$1"
+    local FROM="$2"
+    local TO="$3"
+
+    if [ ! -f "$FILE" ]; then
+        LOGW "File not found: ${FILE//$WORK_DIR/}"
+        return 0
+    fi
+
+    if xxd -p -c 0 "$FILE" | grep -q "$TO"; then
+        LOG "- libvpl unload already patched in ${FILE//$WORK_DIR/}"
+    elif xxd -p -c 0 "$FILE" | grep -q "$FROM"; then
+        HEX_PATCH "$FILE" "$FROM" "$TO"
+    else
+        _LOG "No known libvpl unload patch available for ${FILE//$WORK_DIR/}"
+    fi
+}
+
+LOG_STEP_IN "- Patching libvpl unload"
+PATCH_LIBVPL_UNLOAD "$WORK_DIR/vendor/lib/libvpl.so" \
+    "b0b524490420244a79447a4424f016ee224c01207c44d4e8" \
+    "704700bf0420244a79447a4424f016ee224c01207c44d4e8"
+PATCH_LIBVPL_UNLOAD "$WORK_DIR/vendor/lib64/libvpl.so" \
+    "fd7bbca9f70b00f9f65702a9f44f03a9fd03009141fefff0" \
+    "c0035fd6f70b00f9f65702a9f44f03a9fd03009141fefff0"
+LOG_STEP_OUT
+unset -f PATCH_LIBVPL_UNLOAD
+
 unset SOURCE_FIRMWARE_PATH TARGET_FIRMWARE_PATH \
     SOURCE_CAMERA_CONFIG_ACTION_CLASSIFIER TARGET_CAMERA_CONFIG_ACTION_CLASSIFIER \
     SOURCE_CAMERA_CONFIG_GPPM_SOLUTIONS TARGET_CAMERA_CONFIG_GPPM_SOLUTIONS \
