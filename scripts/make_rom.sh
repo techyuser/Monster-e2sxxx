@@ -140,6 +140,7 @@ if $BUILD_ROM; then
             f="${f/$APKTOOL_DIR\//}"
             PARTITION="$(cut -d "/" -f 1 -s <<< "$f")"
             if [[ "$PARTITION" == "system" ]]; then
+                [[ "$f" == *"framework.jar"* ]] && continue
                 "$SRC_DIR/scripts/apktool.sh" b "system" "$f" &
             else
                 "$SRC_DIR/scripts/apktool.sh" b "$PARTITION" "$(cut -d "/" -f 2- -s <<< "$f")" &
